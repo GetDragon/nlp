@@ -17,7 +17,7 @@ def summary():
       sumy = SumyHelper()
       return sumy.Execute(batch)
    except BaseException as err:
-      return bytes(err.user_message, "utf-8")
+      return bytes(err, "utf-8")
 
 if __name__ == '__main__':
    app.run()
