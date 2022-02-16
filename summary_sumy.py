@@ -45,4 +45,4 @@ class SumyHelper:
         s+=self.ResumenLsa(parser, percent)
         s+=self.ResumenLuhn(parser, percent)
 
-        return s
+        return bytes(s, "utf-8")
