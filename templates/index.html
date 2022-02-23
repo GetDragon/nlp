@@ -147,6 +147,7 @@
         function EnviarTexto() {
             let resultado = document.getElementById("Resultado");
             let data = document.getElementById("message").value;
+            let p = document.getElementById("percent").value;
 
             if (data.length > 0) {
                 resultado.innerText = "Realizando resumen...";
@@ -159,7 +160,7 @@
                     }
                 };
 
-                xhr.open('POST', "/summary", true);
+                xhr.open('POST', "/summary?p=" + p, true);
                 xhr.send(data);
             }
         }
@@ -182,6 +183,10 @@
                 <label for="message">
                     <span class="required">Texto Original: *</span>
                     <textarea id="message" name="message" placeholder="Texto a resumir." tabindex="5" required="required"></textarea>
+                </label>
+                <label for="percent">
+                    <span class="required">Porcentaje: *</span>
+                    <input id="percent" name="percent" tabindex="6" required="required" value="40" />
                 </label>
             </div>
             <div>

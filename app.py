@@ -15,7 +15,8 @@ def summary():
    batch = request.data.decode("utf-8")
    try:
       sumy = SumyHelper()
-      return sumy.Execute(batch)
+      p = int(request.args.get("p"))
+      return sumy.Execute(batch, p)
    except BaseException as err:
       return bytes(err, "utf-8")
 

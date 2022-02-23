@@ -35,9 +35,15 @@ class SumyHelper:
         
         return ret_val
 
-    def Execute(self, text):
+    def Execute(self, text, p):
+        filterLines = []
         lines = text.splitlines()
-        percent = int(len(lines) * 30 / 100)
+        for l in lines:
+            if len(l) > 0:
+                filterLines.append(l)
+
+        percent = int(len(filterLines) * p / 100)
+
         parser=PlaintextParser.from_string(text,Tokenizer("spanish"))
 
         s = ""
