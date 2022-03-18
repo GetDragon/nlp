@@ -1,6 +1,6 @@
 import nltkmodules
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, jsonify, make_response
 app = Flask(__name__)
 
 from summary_sumy import SumyHelper
@@ -16,9 +16,13 @@ def summary():
    try:
       sumy = SumyHelper()
       p = int(request.args.get("p"))
-      return sumy.Execute(batch, p)
+      type = request.args.get("type")
+      return jsonify(
+        type=type,
+        text=sumy.Execute(type, batch, p)
+      )
    except BaseException as err:
-      return bytes(err, "utf-8")
+      return make_response(err, 200)
 
 if __name__ == '__main__':
    app.run()

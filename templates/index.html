@@ -145,6 +145,7 @@
     </style>
     <script>
         function EnviarTexto() {
+            let alg = document.getElementById("select");
             let resultado = document.getElementById("Resultado");
             let data = document.getElementById("message").value;
             let p = document.getElementById("percent").value;
@@ -156,11 +157,11 @@
                     if (this.readyState != 4) return;
 
                     if (this.status == 200) {
-                        resultado.innerText = this.responseText;
+                        resultado.innerText = JSON.parse(this.responseText).text;
                     }
                 };
 
-                xhr.open('POST', "/summary?p=" + p, true);
+                xhr.open('POST', "/summary?p=" + p + "&type=" + alg.value, true);
                 xhr.send(data);
             }
         }
@@ -180,6 +181,14 @@
         </div>
         <form>
             <div>
+                <label for="select">
+                    <span class="required">Algoritmo: *</span>
+                    <select id="select" name="message">
+                        <option value="LexRank">LexRank</option>
+                        <option value="Lsa">Lsa</option>
+                        <option value="Luhn">Luhn</option>
+                    </select>
+                </label>
                 <label for="message">
                     <span class="required">Texto Original: *</span>
                     <textarea id="message" name="message" placeholder="Texto a resumir." tabindex="5" required="required"></textarea>

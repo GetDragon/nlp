@@ -7,35 +7,37 @@ from sumy.summarizers.luhn import LuhnSummarizer
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 
+import os
+
 class SumyHelper:
     def ResumenLexRank(self, parser, percent):
         sumLexRank=LexRankSummarizer()
         my_summary=sumLexRank(parser.document,percent)
-        ret_val = "Resumen Algoritmo LexRank\n"
+        ret_val = ""
         for s in my_summary:
-            ret_val += str(s) + "\n"
+            ret_val += str(s) + os.linesep
         
         return ret_val
 
     def ResumenLsa(self, parser, percent):
         sumLsa= LsaSummarizer()
         my_summary=sumLsa(parser.document,percent)
-        ret_val = "\nResumen Algoritmo LSA\n"
+        ret_val = ""
         for s in my_summary:
-            ret_val += str(s) + "\n"
+            ret_val += str(s) + os.linesep
         
         return ret_val
 
     def ResumenLuhn(self, parser, percent):
         sumLuhn= LuhnSummarizer()
         my_summary=sumLuhn(parser.document,percent)
-        ret_val = "\nResumen Algoritmo Luhn\n"
+        ret_val = ""
         for s in my_summary:
-            ret_val += str(s) + "\n"
+            ret_val += str(s) + os.linesep
         
         return ret_val
 
-    def Execute(self, text, p):
+    def Execute(self, type, text, p):
         filterLines = []
         lines = text.splitlines()
         for l in lines:
@@ -47,8 +49,11 @@ class SumyHelper:
         parser=PlaintextParser.from_string(text,Tokenizer("spanish"))
 
         s = ""
-        s+=self.ResumenLexRank(parser, percent)
-        s+=self.ResumenLsa(parser, percent)
-        s+=self.ResumenLuhn(parser, percent)
+        if type == "LexRank":
+            s=self.ResumenLexRank(parser, percent)
+        elif type == "Lsa":
+            s=self.ResumenLsa(parser, percent)
+        elif type == "Luhn":
+            s=self.ResumenLuhn(parser, percent)
 
-        return bytes(s, "utf-8")
+        return s
